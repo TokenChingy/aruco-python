@@ -29,10 +29,10 @@ def main():
                 filtered_frame, aruco_dictionary, parameters=aruco_parameters)
 
             if numpy.all(ids != None):
-                rotation_vector, translation_vecotor, _ = cv2.aruco.estimatePoseSingleMarkers(
+                rotation_vector, translation_vector, _ = cv2.aruco.estimatePoseSingleMarkers(
                     corners[0], 0.05, camera_matrix, camera_distortion_coefficients)
                 cv2.aruco.drawAxis(composite_frame, camera_matrix, camera_distortion_coefficients,
-                                   rotation_vector[0], translation_vecotor[0], 0.1)
+                                   rotation_vector[0], translation_vector[0], 0.1)
                 cv2.aruco.drawDetectedMarkers(
                     composite_frame, corners, ids)
 
