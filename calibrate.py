@@ -40,7 +40,7 @@ def main():
 
             composite_frame = cv2.drawChessboardCorners(
                 composite_frame, (7, 6), sub_corners, return_status)
-            cv2.imshow('Calibrated Image', composite_frame)
+            cv2.imshow('Calibrated Image: Esc to quit.', composite_frame)
 
             keyboard_event = cv2.waitKey(0)
             if keyboard_event == 27:

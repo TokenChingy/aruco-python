@@ -36,7 +36,7 @@ def main():
                 cv2.aruco.drawDetectedMarkers(
                     composite_frame, corners, ids)
 
-            cv2.imshow('Aruco Markers: Q to quit.', composite_frame)
+            cv2.imshow('Aruco Markers: Esc to quit.', composite_frame)
 
             keyboard_event = cv2.waitKey(0)
             if keyboard_event == 27:
