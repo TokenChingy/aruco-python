@@ -9,8 +9,8 @@ import os
 def main():
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
-    object_points = numpy.zeros((6*7, 3), dtype=numpy.float32)
-    object_points[:, :2] = numpy.mgrid[0:7, 0:6].T.reshape(-1, 2)
+    object_points = numpy.zeros((6 * 8, 3), dtype=numpy.float32)
+    object_points[:, :2] = numpy.mgrid[0:8, 0:6].T.reshape(-1, 2)
 
     world_points = []
     image_points = []
@@ -30,7 +30,7 @@ def main():
         frame_filtered = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         return_status, corners = cv2.findChessboardCorners(
-            frame_filtered, (7, 6), None)
+            frame_filtered, (8, 6), None)
 
         if return_status == True:
             world_points.append(object_points)
@@ -39,7 +39,7 @@ def main():
             image_points.append(sub_corners)
 
             composite_frame = cv2.drawChessboardCorners(
-                composite_frame, (7, 6), sub_corners, return_status)
+                composite_frame, (8, 6), sub_corners, return_status)
             cv2.imshow('Calibrated Image: Esc to quit.', composite_frame)
 
             keyboard_event = cv2.waitKey(0)

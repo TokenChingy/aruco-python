@@ -36,9 +36,12 @@ def main():
                 cv2.aruco.drawDetectedMarkers(
                     composite_frame, corners, ids)
 
+                normal_rotation_vector = rotation_vector * (180.0 / numpy.pi)
+                normal_translation_vector = translation_vector / 1000.0
+
             cv2.imshow('Aruco Markers: Esc to quit.', composite_frame)
 
-            keyboard_event = cv2.waitKey(0)
+            keyboard_event = cv2.waitKey(1)
             if keyboard_event == 27:
                 cv2.destroyAllWindows()
                 break
