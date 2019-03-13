@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import cv2
 import glob
-import numpy
 import os
+import cv2
+import numpy
 
 
 def main():
