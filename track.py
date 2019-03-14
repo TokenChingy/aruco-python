@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-import cv2
-import numpy
-
 import math
 import sys
 import time
+
+import cv2
+import numpy
+
+from graph.graph import Graph
 
 def inverse_pose(rotation_vector, translation_vector):
     rotation_matrix, jacobian = cv2.Rodrigues(rotation_vector)
