@@ -3,27 +3,32 @@
 import cv2
 import numpy
 
+import math
 import sys
-
+import time
 
 def main():
     dictionary_bits = int(sys.argv[1])
     dictionary_length = int(sys.argv[2])
     marker_size_in_mm = int(sys.argv[3])
 
-    camera = cv2.VideoCapture(0)
-    camera.set(3, 640)
-    camera.set(4, 480)
+    camera = cv2.VideoCapture(0, cv2.CAP_ANY)
 
     try:
         calibration_file = cv2.FileStorage('./calibration/calibration.yaml', cv2.FILE_STORAGE_READ)
+        camera_shape = calibration_file.getNode('camera_shape').mat()
         camera_matrix = calibration_file.getNode('camera_matrix').mat()
         camera_distortion_coefficients = calibration_file.getNode('distortion_coefficients').mat()
         calibration_file.release()
+
+        camera.set(3, int(camera_shape[0]))
+        camera.set(4, int(camera_shape[1]))
     except:
         raise
 
     while True:
+        start_time = time.time()
+
         try:
             frame_status, frame = camera.read()
             composite_frame = frame.copy()
@@ -38,6 +43,7 @@ def main():
                 cv2.aruco.drawAxis(composite_frame, camera_matrix, camera_distortion_coefficients,rotation_vector[0], translation_vector[0], 0.1)
                 cv2.aruco.drawDetectedMarkers(composite_frame, corners, ids)
 
+            cv2.putText(composite_frame, f'FPS: {math.floor(1.0 / (time.time() - start_time))}', (8, 16), cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
             cv2.imshow('Aruco Markers: Esc to quit.', composite_frame)
 
             keyboard_event = cv2.waitKey(1)

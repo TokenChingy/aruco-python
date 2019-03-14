@@ -5,7 +5,6 @@ import sys
 
 import cv2
 
-
 def mm_to_pixel(mm):
     return int((mm * 72) / 25.4)
 

@@ -7,7 +7,6 @@ import sys
 import cv2
 import numpy
 
-
 def main():
     horizontal_cells = int(sys.argv[1])
     vertical_cells = int(sys.argv[2])
