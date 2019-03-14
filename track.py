@@ -7,6 +7,32 @@ import math
 import sys
 import time
 
+def inverse_pose(rotation_vector, translation_vector):
+    rotation_matrix, jacobian = cv2.Rodrigues(rotation_vector)
+    rotation_matrix = numpy.matrix(rotation_matrix).T
+
+    inverse_rotation_vector, jacobian = cv2.Rodrigues(rotation_matrix)
+    inverse_translation_vector = numpy.dot(-rotation_matrix, numpy.matrix(translation_vector))
+
+    return inverse_rotation_vector, inverse_translation_vector
+
+
+def relative_pose(rotation_vector_parent, translation_vector_parent, rotation_vector_child, translation_vector_child):
+    rotation_vector_parent, translation_vector_parent = rotation_vector_parent.reshape((3, 1)), translation_vector_parent.reshape((3, 1))
+    rotation_vector_child, translation_vector_child = rotation_vector_child.reshape((3, 1)), translation_vector_child.reshape((3, 1))
+
+    inverse_rotation_vector_child, inverse_translation_vector_child = inverse_pose(rotation_vector_child, translation_vector_child)
+
+    composed_matrix = cv2.composeRT(rotation_vector_parent, translation_vector_parent, inverse_rotation_vector_child, inverse_translation_vector_child)
+    composed_rotation_vector = composed_matrix[0]
+    composed_translation_vector = composed_matrix[1]
+
+    composed_rotation_vector.reshape((3, 1))
+    composed_translation_vector. reshape((3, 1))
+
+    return composed_rotation_vector, composed_translation_vector
+
+
 def main():
     dictionary_bits = int(sys.argv[1])
     dictionary_length = int(sys.argv[2])
